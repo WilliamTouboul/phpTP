@@ -1,0 +1,41 @@
+body {
+    background-color: rgba(212, 207, 192, 0.911);
+}
+
+h1 {
+    text-align: center;
+}
+
+form {
+    border: 1px solid black;
+
+}
+
+.jumbotron {
+    background-image: url('lamanu.jpg');
+    color: white;
+    font-weight: bold;
+}
+
+label {
+    display: inline-block;
+    width: 300px;
+    text-align: right;
+}
+input {
+    width : 300px;
+}
+
+#outerDiv {
+    width: 100%;
+    text-align: center;
+}
+
+#innerDiv {
+
+    display: inline-block;
+    margin: 0 auto;
+    padding: 3px;
+}
+
+​
