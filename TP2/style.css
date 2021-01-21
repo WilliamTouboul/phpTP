@@ -38,4 +38,7 @@ input {
     padding: 3px;
 }
 
-​
+​.error {
+    color : red;
+    text-decoration : underline;
+}

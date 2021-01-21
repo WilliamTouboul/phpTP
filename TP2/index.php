@@ -18,22 +18,186 @@
     </div>
 
     <?php
-    //regex champ de base 
-    // $regexStandard = '/^[\p{L}\p{Nd}\s]+$/';
-    $regexStandard = '/^[a-zA-Z0-9éèàê\'\-\/\.\s]+$/';
+    //Regex pour la plupart des champs 
+    //---- $regexStandard = '/^[\p{L}\p{Nd}\s]+$/'; Probleme avec les accents sur cette regex la.
+    $regexStandard = '/^[a-zA-Z0-9àâäéèêëïîôöùûü\'\-\/\.\,\s]+$/';
     // Regex badges et champ avec chiffres
     $regexNumber = '/^[0-9]+$/';
     //Regex Mail
-    // $regexMail = '/^[a-z0-9._-]*@[a-z0-9_-]{2,}(\.[a-z]{2,4}){1,4}$/';
     $regexMail = '/^(\s*|[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4})$/';
     //Regex Num Tel
     $regexTel = '/^[0-9]{10}$/';
+    //regexURL
+    $regexURL = '/\b(?:(?:https?|ftp):\/\/|www\.)[-a-zA-Z0-9+&@#\/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#\/%=~_|]/i';
+    // Boolean pour verifier si tout est bon.
+    $allGood = FALSE;
+    // Message d'erreur : 
+    $lastnameError = $firstnameError = $natioError = $birthplaceError = $adressError = $emailError = $telError = $codeAcError = $dipError = $PEError = $badgesError = $heroQError = $hackQError = $expError = '';
+    // Boolean pour verifier chaque champ
+    $checkLastname = FALSE;
+    $checkFirstname = FALSE;
+    $checkNationality = FALSE;
+    $checkAdress = FALSE;
+    $checkEmail = FALSE;
+    $checkTel = FALSE;
+    $checkCodeAc = FALSE;
+    $checkPE = FALSE;
+    $checkBadges = FALSE;
+    $checkHeroQ = FALSE;
+    $checkHackQ = FALSE;
+    $checkBirthplace = FALSE;
+    $checkDiplome = FALSE;
+    $checkExp = FALSE;
 
-    // Si le formulaire n'est pas soumis alors on l'affiche : 
-    if (!isset($_POST['buttonSubmit'])) {
+    // Si Submit on verifi chaque champ Regex+Vide ou non
+    if (isset($_POST['buttonSubmit'])) {
+        //Verif NAME :
+        if (!preg_match($regexStandard, $_POST['lastname']) || $_POST['lastname'] == '') {
+            // si incorrect on affiche un message d'erreur via les spans prévu
+            $lastnameError = 'Erreur dans le nom';
+        } else {
+            // si tout va bien on passe le booléen en TRUE
+            $checkLastname = TRUE;
+        }
+
+        //Verif FIRSTNAME
+        if (!preg_match($regexStandard, $_POST['firstname']) || $_POST['firstname'] == '') {
+            $firstnameError = 'Erreur dans le prénom';
+        } else {
+            $checkFirstname = TRUE;
+        }
+
+        //Verif PAYS
+        if (!preg_match($regexStandard, $_POST['nationality']) || $_POST['nationality'] == '') {
+            $natioError = 'Erreur dans la nationalité';
+        } else {
+            $checkNationality = TRUE;
+        }
+
+        //Verif Adresse
+        if (!preg_match($regexStandard, $_POST['adress']) || $_POST['adress'] == '') {
+            $adressError = 'erreur dans l\'adresse';
+        } else {
+            $checkAdress = TRUE;
+        }
+
+        //Verif Email
+        if (!preg_match($regexMail, $_POST['email']) || $_POST['email'] == '') {
+            $emailError = 'Erreur dans le mail';
+        } else {
+            $checkEmail = TRUE;
+        }
+
+        //Verif Telephone
+        if (!preg_match($regexTel, $_POST['tel']) || $_POST['tel'] == '') {
+            $telError = 'erreur dans le numéro de téléphone';
+        } else {
+            $checkTel = TRUE;
+        }
+
+        //Verif N° PE
+        if (!preg_match($regexStandard, $_POST['PENumber']) || $_POST['PENumber'] == '') {
+            $PEError = 'Erreur N° PE';
+        } else {
+            $checkPE = TRUE;
+        }
+
+        // Verif nombre de Badges
+        if (!preg_match($regexNumber, $_POST['badges']) || $_POST['badges'] == '') {
+            $badgesError = 'Erreur nombre badges.';
+        } else {
+            $checkBadges = TRUE;
+        }
+
+        //Verif lien Code Academy
+        if (!preg_match($regexURL, $_POST['codeAc']) || $_POST['codeAc'] == '') {
+            $codeAcError = 'Erreur dans le lien';
+        } else {
+            $checkCodeAc = TRUE;
+        }
+
+        //Verif réponse Héros
+        if (!preg_match($regexStandard, $_POST['heroQ']) || $_POST['heroQ'] == '') {
+            $heroQError = 'Saisie incorrecte';
+        } else {
+            $checkHeroQ = TRUE;
+        }
+
+        //Verif réponse Hack
+        if (!preg_match($regexStandard, $_POST['hackQ']) || $_POST['hackQ'] == '') {
+            $hackQError = 'Saisie incorrecte';
+        } else {
+            $checkHackQ = TRUE;
+        }
+
+        //Verif si les select sont vide :
+        if ($_POST['birthplace'] == '') {
+            $birthplaceError = 'Veuillez choisir un pays';
+        } else {
+            $checkBirthplace = TRUE;
+        }
+
+        if ($_POST['diplome'] == '') {
+            $dipError = 'Veuillez choisir un niveau d\'etude';
+        } else {
+            $checkDiplome = TRUE;
+        }
+
+        if ($_POST['exp'] == '') {
+            $expError = 'Veuillez trucmachin';
+        } else {
+            $checkExp = TRUE;
+        }
+
+        // Si tout les check sont passé en TRUE, on passe $allGood en TRUE. Si AllGood==TRUE on affiche le resultat, sinon on affiche le formulaire.
+        if (
+            $checkLastname == TRUE &&
+            $checkNationality == TRUE &&
+            $checkFirstname == TRUE &&
+            $checkAdress == TRUE &&
+            $checkEmail == TRUE &&
+            $checkTel == TRUE &&
+            $checkCodeAc == TRUE &&
+            $checkPE == TRUE &&
+            $checkBadges == TRUE &&
+            $checkHeroQ == TRUE &&
+            $checkHackQ == TRUE &&
+            $checkBirthplace == TRUE &&
+            $checkDiplome == TRUE &&
+            $checkExp == TRUE
+        ) {
+            $allGood = TRUE;
+        } else {
+            $allGood = FALSE;
+        }
+    }
+
+    if ($allGood) {
     ?>
-
-
+        <div class="container-fluid" id="outerDiv">
+            <div class="row" id="innerDiv">
+                <h2>Nouvel apprenant : </h2>
+                <div>
+                    <i> Nom : </i> <?php echo $_POST['lastname'] ?> <br>
+                    <i> Prénom : </i> <?php echo $_POST['firstname'] ?> <br>
+                    <i> Date de naissance : </i> <?php echo $_POST['birth'] ?> <br>
+                    <i> Nationalité : </i> <?php echo $_POST['nationality'] ?> <br>
+                    <i> Adresse : </i> <?php echo $_POST['adress'] ?> <br>
+                    <i> E-mail : </i> <?php echo $_POST['email'] ?> <br>
+                    <i> Téléphone : </i> <?php echo $_POST['tel'] ?> <br>
+                    <i> Niveau d'étude : </i> <?php echo $_POST['diplome'] ?> <br>
+                    <i> N° Pôle Emploi : </i> <?php echo $_POST['PENumber'] ?> <br>
+                    <i> Badges Obtenus : </i> <?php echo $_POST['badges'] ?> <br>
+                    <i> Code Academy : </i> <?php echo '<a href="' . $_POST['codeAc'] . '">' . $_POST['codeAc'] . '</a>' ?> <br>
+                    <i> Si vous étiez un super héros/une super héroïne, qui seriez-vous et pourquoi : </i> <?php echo $_POST['heroQ'] ?> <br>
+                    <i> Racontez-nous un de vos "hacks" : </i> <?php echo $_POST['hackQ'] ?> <br>
+                    <i> Experience : </i> <?php echo $_POST['exp'] ?>
+                </div>
+            </div>
+        </div>
+    <?php
+    } else {
+    ?>
         <h1>Formulaire d'inscription</h1>
         <div class="container-fluid" id="outerDiv">
             <div class="row" id="innerDiv">
@@ -41,12 +205,21 @@
                     <div>
                         <!-- Nom -->
                         <label for="lastname">Nom : </label>
-                        <input type="text" name="lastname" id="lastname">
+                        <!-- la value sert a garder les infos dans le champ si on actualise pour eviter de tout perdre sur une mauvaise saisie. -->
+                        <input type="text" name="lastname" id="lastname" value="<?php if (isset($_POST['lastname'])) {
+                                                                                    echo $_POST['lastname'];
+                                                                                } ?>">
+                        <!-- Span avec le message d'erreur a afficher. -->
+                        <span class="error"> <?php echo $lastnameError; ?> </span>
+
                     </div>
                     <div>
                         <!-- Prénom -->
                         <label for="firstname">Prénom : </label>
-                        <input type="text" name="firstname" id="firstname">
+                        <input type="text" name="firstname" id="firstname" value="<?php if (isset($_POST['firstname'])) {
+                                                                                        echo $_POST['firstname'];
+                                                                                    }  ?>">
+                        <span class="error"><?php echo $firstnameError; ?> </span>
                     </div>
                     <div>
                         <!-- Date de naissance -->
@@ -58,6 +231,7 @@
                         <!-- Pays de naissance -->
                         <label for="birthplace">Pays de Naissance : </label>
                         <select name="birthplace" id="birthplace">
+                            <option value="">--Choisissez--</option>
                             <option value="AFG">Afghanistan</option>
                             <option value="ALA">Åland Islands</option>
                             <option value="ALB">Albanie</option>
@@ -308,71 +482,103 @@
                             <option value="ZMB">Zambie</option>
                             <option value="ZWE">Zimbabwe</option>
                         </select>
+                        <span class="error"> <?php echo $birthplaceError; ?> </span>
                     </div>
                     <div>
                         <!-- Nationalité -->
                         <label for="nationality">Nationalité : </label>
-                        <input type="text" name="nationality" id="nationality>">
+                        <input type="text" name="nationality" id="nationality" value="<?php if (isset($_POST['nationality'])) {
+                                                                                            echo $_POST['nationality'];
+                                                                                        }  ?>">
+                        <span class="error"><?php echo $natioError; ?> </span>
                     </div>
                     <div>
                         <!--  Adresse -->
                         <label for="adress"> Adresse : </label>
-                        <input type="text" name="adress" id="adress">
+                        <input type="text" name="adress" id="adress" value="<?php if (isset($_POST['adress'])) {
+                                                                                echo $_POST['adress'];
+                                                                            }  ?>">
+                        <span class="error"><?php echo $adressError; ?> </span>
                     </div>
                     <!-- E-mail -->
                     <div>
                         <label for="email">e-mail : </label>
-                        <input type="email" name="email" id="email">
+                        <input type="email" name="email" id="email" value="<?php if (isset($_POST['email'])) {
+                                                                                echo $_POST['email'];
+                                                                            }  ?>">
+                        <span class="error"><?php echo $emailError;  ?> </span>
                     </div>
                     <!-- Téléphone -->
                     <div>
                         <label for="tel">Telephone : </label>
-                        <input type="text" name="tel">
+                        <input type="text" name="tel" value="<?php if (isset($_POST['tel'])) {
+                                                                    echo $_POST['tel'];
+                                                                }  ?>">
+                        <span class="error"><?php echo $telError;  ?> </span>
+
                     </div>
                     <!-- Diplome -->
                     <div>
                         <label for="diplome">Diplome : </label>
                         <select id="diplome" name="diplome">
-                            <option value="">Choisissez</option>
+                            <option value="">--Choisissez--</option>
                             <option value="sans">Sans</option>
                             <option value="Bac">Bac</option>
                             <option value="Bac+2">Bac+2</option>
                             <option value="Bac+3 ou supérieur">Bac+3 ou Supérieur</option>
                         </select>
+                        <span class="error"> <?php echo $dipError; ?> </span>
                     </div>
                     <!-- Nmo PE -->
                     <div>
                         <label for="PENumber"> Numéro Pole Emploi : </label>
-                        <input type="PENumber" name="PENumber">
+                        <input type="PENumber" name="PENumber" value="<?php if (isset($_POST['PENumber'])) {
+                                                                            echo $_POST['PENumber'];
+                                                                        } ?>">
+                        <span class="error"><?php echo $PEError; ?> </span>
+
                     </div>
                     <!-- Nombre de badges, la ligue m'attend. -->
                     <div>
                         <label for="badges"> Nombres de badges : </label>
-                        <input type="badges" name="badges">
+                        <input type="badges" name="badges" value="<?php if (isset($_POST['badges'])) {
+                                                                        echo $_POST['badges'];
+                                                                    } ?>">
+                        <span class="error"><?php echo $badgesError;  ?> </span>
+
                     </div>
                     <!-- Lien Code Academy -->
                     <div>
                         <label for="codeAc"> Lien Code Academy : </label>
-                        <input type="codeAc" name="codeAc">
+                        <input type="codeAc" name="codeAc" value="<?php if (isset($_POST['codeAc'])) {
+                                                                        echo $_POST['codeAc'];
+                                                                    } ?>">
+                        <span class="error"><?php echo $codeAcError; ?>
                     </div>
                     <!-- Premier text Area pour une question -->
                     <div>
                         <label for="heroQ">Si vous étiez un super héros/une super héroïne, qui seriez-vous et pourquoi ? <br> </label>
                         <textarea id="heroQ" name="heroQ" maxlength="200"></textarea>
+                        <span class="error"><?php echo $heroQError;  ?> </span>
+
                     </div>
                     <!-- Second Text Aera pour la deuxieme question -->
                     <div>
                         <label for="hackQ">Racontez-nous un de vos "hacks" (pas forcément technique ou informatique) <br> </label>
                         <textarea id="hackQ" name="hackQ" maxlength="200"></textarea>
+                        <span class="error"><?php echo $hackQError;  ?> </span>
+
                     </div>
                     <div>
                         <!-- Exp -->
                         <label for="exp">Avez vous déjà eu une expérience avec la programmation et/ou l'informatique avant de remplir ce formulaire ?</label>
                         <select id="exp" name="exp">
-                            <option value="">--Choisissez--></option>
+                            <option value="">--Choisissez--</option>
                             <option value="oui">Oui</option>
                             <option value="non">Non.</option>
                         </select>
+                        <span class="error"><?php echo $expError;  ?> </span>
+
                     </div>
                     <!-- Bouton -->
                     <input type="submit" value="GO" id="buttonSubmit" name="buttonSubmit">
@@ -381,38 +587,11 @@
         </div>
 
     <?php
-
-    } else if (
-        !preg_match($regexStandard, $_POST['lastname']) || $_POST['lastname'] == '' ||
-        !preg_match($regexStandard, $_POST['firstname']) || $_POST['firstname'] == '' ||
-        !preg_match($regexStandard, $_POST['nationality']) || $_POST['nationality'] == '' ||
-        !preg_match($regexStandard, $_POST['adress']) || $_POST['adress'] == '' ||
-        !preg_match($regexMail, $_POST['email']) || $_POST['email'] == '' ||
-        !preg_match($regexTel, $_POST['tel']) || $_POST['tel'] == '' ||
-        !preg_match($regexStandard, $_POST['PENumber']) || $_POST['PENumber'] == '' ||
-        !preg_match($regexNumber, $_POST['badges']) || $_POST['badges'] == '' ||
-        !preg_match($regexStandard, $_POST['heroQ']) || $_POST['heroQ'] == '' ||
-        !preg_match($regexStandard, $_POST['hackQ']) || $_POST['hackQ'] == ''
-    ) {
-        echo 'error';
-    } else {
-        echo '<h1> Nouvel apprenant : </h1>';
-        echo '<div class="text-justify"> Nom : ' . $_POST['lastname'] . '<br>';
-        echo 'Prénom : ' . $_POST['firstname'] . '<br>';
-        echo 'Date de naissance : ' . $_POST['birth'] . '<br>';
-        echo 'Nationalité : ' . $_POST['nationality'] . '<br>';
-        echo 'Adresse : ' . $_POST['adress'] . '<br>';
-        echo 'E-mail : ' . $_POST['email'] . '<br>';
-        echo 'Téléphone : ' . $_POST['tel'] . '<br>';
-        echo 'Diplôme : ' . $_POST['diplome'] . '<br>';
-        echo 'Numéro Pôle Emploi : ' . $_POST['PENumber'] . '<br>';
-        echo 'Badge(s) obtenu(s) : ' . $_POST['badges'] . '<br>';
-        echo 'Lien code academy : ' . '<a href="' . $_POST['codeAc'] . '">' . $_POST['codeAc'] . '</a>' . '<br>';
-        echo 'Si vous étiez un super héros/une super héroïne, qui seriez-vous et pourquoi : ' . $_POST['heroQ'] . '<br>';
-        echo 'Racontez-nous un de vos "hacks" : ' . $_POST['hackQ'] . '<br>';
-        echo 'Experience dans la prog : ' . $_POST['exp'] . '<br> </div>';
     }
+
     ?>
+
+
 </body>
 
 </html>
