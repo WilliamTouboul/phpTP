@@ -9,27 +9,25 @@
 
 <body>
     <?php
-    if (!isset($_POST['civ']) || trim($_POST['civ']=='')
-    || !isset($_POST['lastname']) || trim($_POST['lastname']=='')
-    || !isset($_POST['firstname']) || trim($_POST['firstname']=='')
-    || !isset($_POST['soc']) || trim($_POST['soc']=='')
-    || !isset($_POST['age']) || trim($_POST['age']=='')) 
-    {
-        echo 'Un champ n\'as pas été rempli convenablement <br>';
-        echo '<a href="index.php">Retour au formulaire </a>';
+    if (
+        !isset($_POST['civ']) || $_POST['civ'] == ''
+        || !isset($_POST['lastname']) || $_POST['lastname'] == ''
+        || !isset($_POST['firstname']) || $_POST['firstname'] == ''
+        || !isset($_POST['soc']) || $_POST['soc'] == ''
+        || !isset($_POST['age']) || $_POST['age'] == ''
+    ) { ?>
+        <p> Un champ n'as pas été rempli convenablement <br> <a href="index.php">Retour au formulaire </a> </p>
+    <?php
     } else {
-
-        echo 'Bonjour ' . $_POST['civ'] . ' ' . $_POST['firstname'] . ' ' . $_POST['lastname'] . '<br>';
-        echo 'Société : ' . $_POST['soc'] . ' <br> Age : ' .$_POST['age'] . ' ans.s';
-    }
-
-
-
-
-
     ?>
-<div>
-</div>
+        <p>
+            Bonjour <?= $_POST['civ'] ?> <?= $_POST['firstname'] ?> <?= $_POST['lastname'] ?> <br>
+            Société : <?= $_POST['soc'] ?> <br> Age : <?= $_POST['age'] ?> ans.
+        </p>
+    <?php
+    }
+    ?>
+
 
 
 </body>

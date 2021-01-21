@@ -178,20 +178,20 @@
             <div class="row" id="innerDiv">
                 <h2>Nouvel apprenant : </h2>
                 <div>
-                    <i> Nom : </i> <?php echo $_POST['lastname'] ?> <br>
-                    <i> Prénom : </i> <?php echo $_POST['firstname'] ?> <br>
-                    <i> Date de naissance : </i> <?php echo $_POST['birth'] ?> <br>
-                    <i> Nationalité : </i> <?php echo $_POST['nationality'] ?> <br>
-                    <i> Adresse : </i> <?php echo $_POST['adress'] ?> <br>
-                    <i> E-mail : </i> <?php echo $_POST['email'] ?> <br>
-                    <i> Téléphone : </i> <?php echo $_POST['tel'] ?> <br>
-                    <i> Niveau d'étude : </i> <?php echo $_POST['diplome'] ?> <br>
-                    <i> N° Pôle Emploi : </i> <?php echo $_POST['PENumber'] ?> <br>
-                    <i> Badges Obtenus : </i> <?php echo $_POST['badges'] ?> <br>
-                    <i> Code Academy : </i> <?php echo '<a href="' . $_POST['codeAc'] . '">' . $_POST['codeAc'] . '</a>' ?> <br>
-                    <i> Si vous étiez un super héros/une super héroïne, qui seriez-vous et pourquoi : </i> <?php echo $_POST['heroQ'] ?> <br>
-                    <i> Racontez-nous un de vos "hacks" : </i> <?php echo $_POST['hackQ'] ?> <br>
-                    <i> Experience : </i> <?php echo $_POST['exp'] ?>
+                    <i> Nom : </i> <?= $_POST['lastname'] ?> <br>
+                    <i> Prénom : </i> <?= $_POST['firstname'] ?> <br>
+                    <i> Date de naissance : </i> <?= $_POST['birth'] ?> <br>
+                    <i> Nationalité : </i> <?= $_POST['nationality'] ?> <br>
+                    <i> Adresse : </i> <?= $_POST['adress'] ?> <br>
+                    <i> E-mail : </i> <?= $_POST['email'] ?> <br>
+                    <i> Téléphone : </i> <?= $_POST['tel'] ?> <br>
+                    <i> Niveau d'étude : </i> <?= $_POST['diplome'] ?> <br>
+                    <i> N° Pôle Emploi : </i> <?= $_POST['PENumber'] ?> <br>
+                    <i> Badges Obtenus : </i> <?= $_POST['badges'] ?> <br>
+                    <i> Code Academy : </i> <?= '<a href="' . $_POST['codeAc'] . '">' . $_POST['codeAc'] . '</a>' ?> <br>
+                    <i> Si vous étiez un super héros/une super héroïne, qui seriez-vous et pourquoi : </i> <?= $_POST['heroQ'] ?> <br>
+                    <i> Racontez-nous un de vos "hacks" : </i> <?= $_POST['hackQ'] ?> <br>
+                    <i> Experience : </i> <?= $_POST['exp'] ?>
                 </div>
             </div>
         </div>
