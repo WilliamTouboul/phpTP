@@ -5,11 +5,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TP2</title>
+    <!-- CDN Bootstrap -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <!-- CSS -->
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
+    <!-- Jumbo -->
     <div class="jumbotron jumbotron-fluid text-left">
         <div class="container text-left">
             <h1 class="display-4 text-left">La Manu</h1>
@@ -32,7 +35,9 @@
     // Boolean pour verifier si tout est bon.
     $allGood = FALSE;
     // Message d'erreur : 
-    $lastnameError = $firstnameError = $natioError = $birthplaceError = $adressError = $emailError = $telError = $codeAcError = $dipError = $PEError = $badgesError = $heroQError = $hackQError = $expError = '';
+    $lastnameError = $firstnameError = $natioError = $birthplaceError = $adressError = $emailError = $telError = $codeAcError = $dipError = $PEError = $badgesError = $heroQError = $hackQError = $expError = $ageError = '';
+    // String avec message d'erreur
+    $errorMessage = 'Erreur dans le champ.';
     // Boolean pour verifier chaque champ
     $checkLastname = FALSE;
     $checkFirstname = FALSE;
@@ -48,105 +53,143 @@
     $checkBirthplace = FALSE;
     $checkDiplome = FALSE;
     $checkExp = FALSE;
+    $checkAge = FALSE;
 
-    // Si Submit on verifi chaque champ Regex+Vide ou non
+    // Si Submit on verifie chaque champ Regex+Vide ou non
     if (isset($_POST['buttonSubmit'])) {
+        // Fonction pour verifier les regex ET si les champs sont vides.
+        function CheckInput($regex, $posted)
+        {
+            if (!preg_match($regex, $posted) || empty($posted)) {
+                return FALSE;
+            } else {
+                return TRUE;
+            }
+        }
+
+        // Fonction pour calculer l'age selon la date de naissance
+        function calculateAge($DoB)
+        {
+            // On prend la date de naissance
+            $userDob = $DoB;
+            // Conversion en Date
+            $dob = new DateTime($userDob);
+            // ON prend la date du jour
+            $now = new DateTime();
+            // Calcul difference
+            $difference = $now->diff($dob);
+            // conversion en année.
+            $age = $difference->y;
+            return $age;
+        }
+
         //Verif NAME :
-        if (!preg_match($regexStandard, $_POST['lastname']) || $_POST['lastname'] == '') {
-            // si incorrect on affiche un message d'erreur via les spans prévu
-            $lastnameError = 'Erreur dans le nom';
-        } else {
-            // si tout va bien on passe le booléen en TRUE
+        if (CheckInput($regexStandard, $_POST['lastname'])) {
             $checkLastname = TRUE;
+        } else {
+            $lastnameError = $errorMessage;
         }
 
         //Verif FIRSTNAME
-        if (!preg_match($regexStandard, $_POST['firstname']) || $_POST['firstname'] == '') {
-            $firstnameError = 'Erreur dans le prénom';
-        } else {
+        if (CheckInput($regexStandard, $_POST['firstname'])) {
             $checkFirstname = TRUE;
+        } else {
+            $firstnameError = $errorMessage;
         }
 
         //Verif PAYS
-        if (!preg_match($regexStandard, $_POST['nationality']) || $_POST['nationality'] == '') {
-            $natioError = 'Erreur dans la nationalité';
-        } else {
+        if (CheckInput($regexStandard, $_POST['nationality'])) {
             $checkNationality = TRUE;
+        } else {
+            $natioError = $errorMessage;
         }
+
 
         //Verif Adresse
-        if (!preg_match($regexStandard, $_POST['adress']) || $_POST['adress'] == '') {
-            $adressError = 'erreur dans l\'adresse';
-        } else {
+        if (CheckInput($regexStandard, $_POST['adress'])) {
             $checkAdress = TRUE;
+        } else {
+            $adressError = $errorMessage;
         }
 
+
         //Verif Email
-        if (!preg_match($regexMail, $_POST['email']) || $_POST['email'] == '') {
-            $emailError = 'Erreur dans le mail';
-        } else {
+        if (CheckInput($regexMail, $_POST['email'])) {
             $checkEmail = TRUE;
+        } else {
+            $emailError = $errorMessage;
         }
 
         //Verif Telephone
-        if (!preg_match($regexTel, $_POST['tel']) || $_POST['tel'] == '') {
-            $telError = 'erreur dans le numéro de téléphone';
-        } else {
+        if (CheckInput($regexTel, $_POST['tel'])) {
             $checkTel = TRUE;
+        } else {
+            $telError = $errorMessage;
         }
 
         //Verif N° PE
-        if (!preg_match($regexStandard, $_POST['PENumber']) || $_POST['PENumber'] == '') {
-            $PEError = 'Erreur N° PE';
-        } else {
+        if (CheckInput($regexStandard, $_POST['PENumber'])) {
             $checkPE = TRUE;
+        } else {
+            $PEError = $errorMessage;
         }
 
-        // Verif nombre de Badges
-        if (!preg_match($regexNumber, $_POST['badges']) || $_POST['badges'] == '') {
-            $badgesError = 'Erreur nombre badges.';
-        } else {
+        // Verif nombre de Badges$
+        if (CheckInput($regexNumber, $_POST['badges'])) {
             $checkBadges = TRUE;
+        } else {
+            $badgesError = $errorMessage;
         }
+
 
         //Verif lien Code Academy
-        if (!preg_match($regexURL, $_POST['codeAc']) || $_POST['codeAc'] == '') {
-            $codeAcError = 'Erreur dans le lien';
-        } else {
+        if (CheckInput($regexURL, $_POST['codeAc'])) {
             $checkCodeAc = TRUE;
+        } else {
+            $codeAcError = $errorMessage;
         }
 
         //Verif réponse Héros
-        if (!preg_match($regexStandard, $_POST['heroQ']) || $_POST['heroQ'] == '') {
-            $heroQError = 'Saisie incorrecte';
-        } else {
+        if (CheckInput($regexStandard, $_POST['heroQ'])) {
             $checkHeroQ = TRUE;
+        } else {
+            $heroQError = $errorMessage;
         }
+
 
         //Verif réponse Hack
-        if (!preg_match($regexStandard, $_POST['hackQ']) || $_POST['hackQ'] == '') {
-            $hackQError = 'Saisie incorrecte';
-        } else {
+        if (CheckInput($regexStandard, $_POST['hackQ'])) {
             $checkHackQ = TRUE;
+        } else {
+            $hackQError = $errorMessage;
         }
 
-        //Verif si les select sont vide :
+        //Verif si les selects sont vide :
         if ($_POST['birthplace'] == '') {
             $birthplaceError = 'Veuillez choisir un pays';
         } else {
             $checkBirthplace = TRUE;
         }
-
+        //---------
         if ($_POST['diplome'] == '') {
             $dipError = 'Veuillez choisir un niveau d\'etude';
         } else {
             $checkDiplome = TRUE;
         }
-
+        //----------
         if ($_POST['exp'] == '') {
-            $expError = 'Veuillez trucmachin';
+            $expError = 'Veuillez Répondre';
         } else {
             $checkExp = TRUE;
+        }
+
+        // Verif AGE : 
+        $ageToCheck = calculateAge($_POST['birthday']);
+            // ON verifie si l'age est compris entre 18 et 90. 
+        if ($ageToCheck >= 18 && $ageToCheck < 90) {
+            $checkAge = TRUE;
+        } else {
+            $ageError = $errorMessage;
         }
 
         // Si tout les check sont passé en TRUE, on passe $allGood en TRUE. Si AllGood==TRUE on affiche le resultat, sinon on affiche le formulaire.
@@ -164,7 +207,8 @@
             $checkHackQ == TRUE &&
             $checkBirthplace == TRUE &&
             $checkDiplome == TRUE &&
-            $checkExp == TRUE
+            $checkExp == TRUE &&
+            $checkAge == TRUE
         ) {
             $allGood = TRUE;
         } else {
@@ -180,7 +224,7 @@
                 <div>
                     <i> Nom : </i> <?= $_POST['lastname'] ?> <br>
                     <i> Prénom : </i> <?= $_POST['firstname'] ?> <br>
-                    <i> Date de naissance : </i> <?= $_POST['birth'] ?> <br>
+                    <i> Date de naissance : </i> <?= $_POST['birthday'] ?> <br>
                     <i> Nationalité : </i> <?= $_POST['nationality'] ?> <br>
                     <i> Adresse : </i> <?= $_POST['adress'] ?> <br>
                     <i> E-mail : </i> <?= $_POST['email'] ?> <br>
@@ -223,8 +267,9 @@
                     </div>
                     <div>
                         <!-- Date de naissance -->
-                        <label for="birth">Date de Naissance : </label>
-                        <input type="date" id="birth" name="birth" value="2021-01-01">
+                        <label for="birthday">Date de Naissance : </label>
+                        <input type="date" id="birthday" name="birthday" value="">
+                        <span class="error"> <?php echo $ageError; ?> </span>
 
                     </div>
                     <div>
