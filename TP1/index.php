@@ -8,44 +8,38 @@
 </head>
 
 <body>
-    <?php
-    if (!isset($_POST['buttonSubmit'])) {
-    ?>
 
-        <form action="profile.php" method="POST" id="form">
-            <!-- Civilité -->
-            <div>
-                <label for="civ">Civilité : </label>
-                <select name="civ" id="civ">
-                    <option value="">--Choisir--</option>
-                    <option value="Mr">Mr</option>
-                    <option value="Mme">Mme</option>
-                    <option value="">Autre</option>
-                </select>
-            </div>
-            <div>
-                <label for="lastname">Nom : </label>
-                <input type="text" name="lastname" id="lastname">
-            </div>
-            <div>
-                <label for="firstname">Prénom : </label>
-                <input type="text" name="firstname" id="firstname">
-            </div>
-            <div>
-                <label for="age">Age : </label>
-                <input type="text" name="age" id="age">
-            </div>
-            <div>
-                <label for="soc">Société : </label>
-                <input type="text" name="soc" id="soc">
-            </div>
+    <form action="profile.php" method="POST" id="form">
+        <!-- Civilité -->
+        <div>
+            <label for="civ">Civilité : </label>
+            <select name="civ" id="civ">
+                <option value="">--Choisir--</option>
+                <option value="Mr">Mr</option>
+                <option value="Mme">Mme</option>
+                <option value="">Autre</option>
+            </select>
+        </div>
+        <div>
+            <label for="lastname">Nom : </label>
+            <input type="text" name="lastname" id="lastname">
+        </div>
+        <div>
+            <label for="firstname">Prénom : </label>
+            <input type="text" name="firstname" id="firstname">
+        </div>
+        <div>
+            <label for="age">Age : </label>
+            <input type="text" name="age" id="age">
+        </div>
+        <div>
+            <label for="soc">Société : </label>
+            <input type="text" name="soc" id="soc">
+        </div>
 
-            <input type="submit" value="GO" id="buttonSubmit" name="buttonSubmit">
+        <input type="submit" value="GO" id="buttonSubmit" name="buttonSubmit">
 
-        </form>
-    <?php
-    }
-    ?>
+    </form>
 
 </body>
 
