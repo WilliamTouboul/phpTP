@@ -1,3 +1,5 @@
+<?php include('controllers/profile.php'); ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
