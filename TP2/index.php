@@ -61,7 +61,7 @@
                         <!-- la value sert a garder les infos dans le champ si on actualise pour eviter de tout perdre sur une mauvaise saisie. -->
                         <input type="text" name="lastname" id="lastname" value="<?php if (isset($_POST['lastname'])) {
                                                                                     echo $_POST['lastname'];
-                                                                                } ?>">
+                                                                                } ?>" >
                         <!-- Span avec le message d'erreur a afficher. -->
                         <span class="error"> <?= $lastnameError; ?> </span>
 

@@ -1,14 +1,11 @@
     <?php
     //---- $regexStandard = '/^[\p{L}\p{Nd}\s]+$/'; Probleme avec les accents sur cette regex la.
     $regexStandard = "/^[a-zA-Z0-9àâäéèêëïîôöùûü\'\-\/\.\,\s]+$/";
-    // Regex badges et champ avec chiffres
     $regexNumber = '/^[0-9]+$/';
-    //Regex Mail
     $regexMail = '/^(\s*|[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4})$/';
-    //Regex Num Tel
     $regexTel = '/^[0-9]{10}$/';
-    //regexURL
     $regexURL = '/\b(?:(?:https?|ftp):\/\/|www\.)[-a-zA-Z0-9+&@#\/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#\/%=~_|]/i';
+    $regexDate = '/\d{4}-\d{1,2}-\d{1,2}/';
     // Boolean pour verifier si tout est bon.
     $allGood = FALSE;
 
@@ -43,8 +40,9 @@
                 return TRUE;
             }
         }
-        function ErrorM ($ToCheck,$errorM) {
-            if($ToCheck==false) {
+        function ErrorM($ToCheck, $errorM)
+        {
+            if ($ToCheck == false) {
                 $errorM = 'Erreur dans le champ.';
                 return $errorM;
             }
@@ -66,38 +64,38 @@
         }
 
         $checkLastname = (CheckInput($regexStandard, $_POST['lastname']));
-        $lastnameError = errorM($checkLastname,$lastnameError);
+        $lastnameError = errorM($checkLastname, $lastnameError);
 
         $checkFirstname = (CheckInput($regexStandard, $_POST['firstname']));
-        $firstnameError = errorM($checkFirstname,$firstnameError);
+        $firstnameError = errorM($checkFirstname, $firstnameError);
 
         $checkNationality = (CheckInput($regexStandard, $_POST['nationality']));
-        $natioError = errorM($checkNationality,$natioError);
+        $natioError = errorM($checkNationality, $natioError);
 
         $checkAdress = (CheckInput($regexStandard, $_POST['adress']));
-        $adressError = errorM($checkAdress,$adressError);
+        $adressError = errorM($checkAdress, $adressError);
 
         $checkEmail = (CheckInput($regexMail, $_POST['email']));
-        $emailError = errorM($checkEmail,$emailError);
+        $emailError = errorM($checkEmail, $emailError);
 
         $checkTel = (CheckInput($regexTel, $_POST['tel']));
-        $telError = errorM($checkTel,$telError);
+        $telError = errorM($checkTel, $telError);
 
         $checkPE = (CheckInput($regexStandard, $_POST['PENumber']));
-        $PEError = errorM($checkPE,$PEError);
+        $PEError = errorM($checkPE, $PEError);
 
         $checkBadges = (CheckInput($regexNumber, $_POST['badges']));
-        $badgesError = errorM($checkBadges,$badgesError);
+        $badgesError = errorM($checkBadges, $badgesError);
 
         $checkCodeAc = (CheckInput($regexURL, $_POST['codeAc']));
-        $codeAcError = errorM($checkCodeAc,$codeAcError);
+        $codeAcError = errorM($checkCodeAc, $codeAcError);
 
         $checkHeroQ = (CheckInput($regexStandard, $_POST['heroQ']));
-        $heroQError = errorM($checkHeroQ,$heroQError);
+        $heroQError = errorM($checkHeroQ, $heroQError);
 
         //Verif réponse Hack
         $checkHackQ = (CheckInput($regexStandard, $_POST['hackQ']));
-        $hackQError = errorM($checkHackQ,$hackQError);
+        $hackQError = errorM($checkHackQ, $hackQError);
 
         //Verif si les selects sont vide :
         if ($_POST['birthplace'] == '') {
@@ -109,7 +107,7 @@
         if ($_POST['diplome'] == '') {
             $dipError = 'Veuillez choisir un niveau d\'etude';
         } else {
-            $checkDiplome = TRUE;               
+            $checkDiplome = TRUE;
         }
         //----------
         if ($_POST['exp'] == '') {
@@ -119,12 +117,16 @@
         }
 
         // Verif AGE : 
-        $ageToCheck = calculateAge($_POST['birthday']);
-        // ON verifie si l'age est compris entre 18 et 90. 
-        if ($ageToCheck >= 18 && $ageToCheck < 100) {
-            $checkAge = TRUE;
+        if (!preg_match($regexDate, $_POST['birthday'])) {
+            $ageError = 'Erreur dans le champ';
         } else {
-            $ageError = 'Erreur dans le champ.';
+            $ageToCheck = calculateAge($_POST['birthday']);
+            // ON verifie si l'age est compris entre 18 et 90. 
+            if ($ageToCheck >= 18 && $ageToCheck < 100) {
+                $checkAge = TRUE;
+            } else {
+                $ageError = 'Erreur dans le champ.';
+            }
         }
 
         // Si tout les check sont passé en TRUE, on passe $allGood en TRUE. Si AllGood==TRUE on affiche le resultat, sinon on affiche le formulaire.
