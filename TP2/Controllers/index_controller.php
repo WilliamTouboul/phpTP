@@ -1,8 +1,6 @@
-
     <?php
-    //Regex pour la plupart des champs 
     //---- $regexStandard = '/^[\p{L}\p{Nd}\s]+$/'; Probleme avec les accents sur cette regex la.
-    $regexStandard = '/^[a-zA-Z0-9àâäéèêëïîôöùûü\'\-\/\.\,\s]+$/';
+    $regexStandard = "/^[a-zA-Z0-9àâäéèêëïîôöùûü\'\-\/\.\,\s]+$/";
     // Regex badges et champ avec chiffres
     $regexNumber = '/^[0-9]+$/';
     //Regex Mail
@@ -13,10 +11,10 @@
     $regexURL = '/\b(?:(?:https?|ftp):\/\/|www\.)[-a-zA-Z0-9+&@#\/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#\/%=~_|]/i';
     // Boolean pour verifier si tout est bon.
     $allGood = FALSE;
+
     // Message d'erreur : 
     $lastnameError = $firstnameError = $natioError = $birthplaceError = $adressError = $emailError = $telError = $codeAcError = $dipError = $PEError = $badgesError = $heroQError = $hackQError = $expError = $ageError = '';
-    // String avec message d'erreur
-    $errorMessage = 'Erreur dans le champ.';
+
     // Boolean pour verifier chaque champ
     $checkLastname = FALSE;
     $checkFirstname = FALSE;
@@ -45,11 +43,16 @@
                 return TRUE;
             }
         }
+        function ErrorM ($ToCheck,$errorM) {
+            if($ToCheck==false) {
+                $errorM = 'Erreur dans le champ.';
+                return $errorM;
+            }
+        }
 
         // Fonction pour calculer l'age selon la date de naissance
         function calculateAge($DoB)
         {
-            // On prend la date de naissance
             $userDob = $DoB;
             // Conversion en Date
             $dob = new DateTime($userDob);
@@ -62,86 +65,39 @@
             return $age;
         }
 
-        //Verif NAME :
-        if (CheckInput($regexStandard, $_POST['lastname'])) {
-            $checkLastname = TRUE;
-        } else {
-            $lastnameError = $errorMessage;
-        }
+        $checkLastname = (CheckInput($regexStandard, $_POST['lastname']));
+        $lastnameError = errorM($checkLastname,$lastnameError);
 
-        //Verif FIRSTNAME
-        if (CheckInput($regexStandard, $_POST['firstname'])) {
-            $checkFirstname = TRUE;
-        } else {
-            $firstnameError = $errorMessage;
-        }
+        $checkFirstname = (CheckInput($regexStandard, $_POST['firstname']));
+        $firstnameError = errorM($checkFirstname,$firstnameError);
 
-        //Verif PAYS
-        if (CheckInput($regexStandard, $_POST['nationality'])) {
-            $checkNationality = TRUE;
-        } else {
-            $natioError = $errorMessage;
-        }
+        $checkNationality = (CheckInput($regexStandard, $_POST['nationality']));
+        $natioError = errorM($checkNationality,$natioError);
 
+        $checkAdress = (CheckInput($regexStandard, $_POST['adress']));
+        $adressError = errorM($checkAdress,$adressError);
 
-        //Verif Adresse
-        if (CheckInput($regexStandard, $_POST['adress'])) {
-            $checkAdress = TRUE;
-        } else {
-            $adressError = $errorMessage;
-        }
+        $checkEmail = (CheckInput($regexMail, $_POST['email']));
+        $emailError = errorM($checkEmail,$emailError);
 
+        $checkTel = (CheckInput($regexTel, $_POST['tel']));
+        $telError = errorM($checkTel,$telError);
 
-        //Verif Email
-        if (CheckInput($regexMail, $_POST['email'])) {
-            $checkEmail = TRUE;
-        } else {
-            $emailError = $errorMessage;
-        }
+        $checkPE = (CheckInput($regexStandard, $_POST['PENumber']));
+        $PEError = errorM($checkPE,$PEError);
 
-        //Verif Telephone
-        if (CheckInput($regexTel, $_POST['tel'])) {
-            $checkTel = TRUE;
-        } else {
-            $telError = $errorMessage;
-        }
+        $checkBadges = (CheckInput($regexNumber, $_POST['badges']));
+        $badgesError = errorM($checkBadges,$badgesError);
 
-        //Verif N° PE
-        if (CheckInput($regexStandard, $_POST['PENumber'])) {
-            $checkPE = TRUE;
-        } else {
-            $PEError = $errorMessage;
-        }
+        $checkCodeAc = (CheckInput($regexURL, $_POST['codeAc']));
+        $codeAcError = errorM($checkCodeAc,$codeAcError);
 
-        // Verif nombre de Badges$
-        if (CheckInput($regexNumber, $_POST['badges'])) {
-            $checkBadges = TRUE;
-        } else {
-            $badgesError = $errorMessage;
-        }
-
-
-        //Verif lien Code Academy
-        if (CheckInput($regexURL, $_POST['codeAc'])) {
-            $checkCodeAc = TRUE;
-        } else {
-            $codeAcError = $errorMessage;
-        }
-
-        //Verif réponse Héros
-        if (CheckInput($regexStandard, $_POST['heroQ'])) {
-            $checkHeroQ = TRUE;
-        } else {
-            $heroQError = $errorMessage;
-        }
-
+        $checkHeroQ = (CheckInput($regexStandard, $_POST['heroQ']));
+        $heroQError = errorM($checkHeroQ,$heroQError);
 
         //Verif réponse Hack
-        if (CheckInput($regexStandard, $_POST['hackQ'])) {
-            $checkHackQ = TRUE;
-        } else {
-            $hackQError = $errorMessage;
-        }
+        $checkHackQ = (CheckInput($regexStandard, $_POST['hackQ']));
+        $hackQError = errorM($checkHackQ,$hackQError);
 
         //Verif si les selects sont vide :
         if ($_POST['birthplace'] == '') {
@@ -153,7 +109,7 @@
         if ($_POST['diplome'] == '') {
             $dipError = 'Veuillez choisir un niveau d\'etude';
         } else {
-            $checkDiplome = TRUE;
+            $checkDiplome = TRUE;               
         }
         //----------
         if ($_POST['exp'] == '') {
@@ -164,11 +120,11 @@
 
         // Verif AGE : 
         $ageToCheck = calculateAge($_POST['birthday']);
-            // ON verifie si l'age est compris entre 18 et 90. 
-        if ($ageToCheck >= 18 && $ageToCheck < 90) {
+        // ON verifie si l'age est compris entre 18 et 90. 
+        if ($ageToCheck >= 18 && $ageToCheck < 100) {
             $checkAge = TRUE;
         } else {
-            $ageError = $errorMessage;
+            $ageError = 'Erreur dans le champ.';
         }
 
         // Si tout les check sont passé en TRUE, on passe $allGood en TRUE. Si AllGood==TRUE on affiche le resultat, sinon on affiche le formulaire.

@@ -1,4 +1,3 @@
-<?php include('Controllers/index_controller.php'); ?>
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -9,19 +8,21 @@
     <!-- CDN Bootstrap -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <!-- CSS -->
-    <link rel="stylesheet" href="Assets\style.css?ver=1">
-    
+    <link href="Assets/style.css?v=1" rel="stylesheet">
+
 </head>
 
 <body>
+    <?php include('Controllers/index_controller.php'); ?>
+
     <!-- Jumbo -->
     <div class="jumbotron jumbotron-fluid text-left">
         <div class="container text-left">
-            <h1 class="display-4 text-left">La Manu</h1>
+            <h1 class="display-4 text-left"><a href="http://phppartie10/TP2/" id="LaManuLink">La Manu</a></h1>
             <p class="lead">Enregistrement apprenant</p>
         </div>
     </div>
-<?php
+    <?php
     if ($allGood) {
     ?>
         <div class="container-fluid" id="outerDiv">
@@ -45,9 +46,11 @@
                 </div>
             </div>
         </div>
+
     <?php
     } else {
     ?>
+
         <h1>Formulaire d'inscription</h1>
         <div class="container-fluid" id="outerDiv">
             <div class="row" id="innerDiv">
@@ -60,7 +63,7 @@
                                                                                     echo $_POST['lastname'];
                                                                                 } ?>">
                         <!-- Span avec le message d'erreur a afficher. -->
-                        <span class="error"> <?php echo $lastnameError; ?> </span>
+                        <span class="error"> <?= $lastnameError; ?> </span>
 
                     </div>
                     <div>
@@ -69,13 +72,13 @@
                         <input type="text" name="firstname" id="firstname" value="<?php if (isset($_POST['firstname'])) {
                                                                                         echo $_POST['firstname'];
                                                                                     }  ?>">
-                        <span class="error"><?php echo $firstnameError; ?> </span>
+                        <span class="error"><?= $firstnameError; ?> </span>
                     </div>
                     <div>
                         <!-- Date de naissance -->
                         <label for="birthday">Date de Naissance : </label>
                         <input type="date" id="birthday" name="birthday" value="">
-                        <span class="error"> <?php echo $ageError; ?> </span>
+                        <span class="error"> <?= $ageError; ?> </span>
 
                     </div>
                     <div>
@@ -333,7 +336,7 @@
                             <option value="ZMB">Zambie</option>
                             <option value="ZWE">Zimbabwe</option>
                         </select>
-                        <span class="error"> <?php echo $birthplaceError; ?> </span>
+                        <span class="error"> <?= $birthplaceError; ?> </span>
                     </div>
                     <div>
                         <!-- Nationalité -->
@@ -341,7 +344,7 @@
                         <input type="text" name="nationality" id="nationality" value="<?php if (isset($_POST['nationality'])) {
                                                                                             echo $_POST['nationality'];
                                                                                         }  ?>">
-                        <span class="error"><?php echo $natioError; ?> </span>
+                        <span class="error"><?= $natioError; ?> </span>
                     </div>
                     <div>
                         <!--  Adresse -->
@@ -349,7 +352,7 @@
                         <input type="text" name="adress" id="adress" value="<?php if (isset($_POST['adress'])) {
                                                                                 echo $_POST['adress'];
                                                                             }  ?>">
-                        <span class="error"><?php echo $adressError; ?> </span>
+                        <span class="error"><?= $adressError; ?> </span>
                     </div>
                     <!-- E-mail -->
                     <div>
@@ -357,7 +360,7 @@
                         <input type="email" name="email" id="email" value="<?php if (isset($_POST['email'])) {
                                                                                 echo $_POST['email'];
                                                                             }  ?>">
-                        <span class="error"><?php echo $emailError;  ?> </span>
+                        <span class="error"><?= $emailError;  ?> </span>
                     </div>
                     <!-- Téléphone -->
                     <div>
@@ -365,7 +368,7 @@
                         <input type="text" name="tel" value="<?php if (isset($_POST['tel'])) {
                                                                     echo $_POST['tel'];
                                                                 }  ?>">
-                        <span class="error"><?php echo $telError;  ?> </span>
+                        <span class="error"><?= $telError;  ?> </span>
 
                     </div>
                     <!-- Diplome -->
@@ -378,7 +381,7 @@
                             <option value="Bac+2">Bac+2</option>
                             <option value="Bac+3 ou supérieur">Bac+3 ou Supérieur</option>
                         </select>
-                        <span class="error"> <?php echo $dipError; ?> </span>
+                        <span class="error"> <?= $dipError; ?> </span>
                     </div>
                     <!-- Nmo PE -->
                     <div>
@@ -386,7 +389,7 @@
                         <input type="PENumber" name="PENumber" value="<?php if (isset($_POST['PENumber'])) {
                                                                             echo $_POST['PENumber'];
                                                                         } ?>">
-                        <span class="error"><?php echo $PEError; ?> </span>
+                        <span class="error"><?= $PEError; ?> </span>
 
                     </div>
                     <!-- Nombre de badges, la ligue m'attend. -->
@@ -395,7 +398,7 @@
                         <input type="badges" name="badges" value="<?php if (isset($_POST['badges'])) {
                                                                         echo $_POST['badges'];
                                                                     } ?>">
-                        <span class="error"><?php echo $badgesError;  ?> </span>
+                        <span class="error"><?= $badgesError;  ?> </span>
 
                     </div>
                     <!-- Lien Code Academy -->
@@ -404,20 +407,20 @@
                         <input type="codeAc" name="codeAc" value="<?php if (isset($_POST['codeAc'])) {
                                                                         echo $_POST['codeAc'];
                                                                     } ?>">
-                        <span class="error"><?php echo $codeAcError; ?>
+                        <span class="error"><?= $codeAcError; ?>
                     </div>
                     <!-- Premier text Area pour une question -->
                     <div>
                         <label for="heroQ">Si vous étiez un super héros/une super héroïne, qui seriez-vous et pourquoi ? <br> </label>
                         <textarea id="heroQ" name="heroQ" maxlength="200"></textarea>
-                        <span class="error"><?php echo $heroQError;  ?> </span>
+                        <span class="error"><?= $heroQError;  ?> </span>
 
                     </div>
                     <!-- Second Text Aera pour la deuxieme question -->
                     <div>
                         <label for="hackQ">Racontez-nous un de vos "hacks" (pas forcément technique ou informatique) <br> </label>
                         <textarea id="hackQ" name="hackQ" maxlength="200"></textarea>
-                        <span class="error"><?php echo $hackQError;  ?> </span>
+                        <span class="error"><?= $hackQError;  ?> </span>
 
                     </div>
                     <div>
@@ -428,7 +431,7 @@
                             <option value="oui">Oui</option>
                             <option value="non">Non.</option>
                         </select>
-                        <span class="error"><?php echo $expError;  ?> </span>
+                        <span class="error"><?= $expError;  ?> </span>
 
                     </div>
                     <!-- Bouton -->

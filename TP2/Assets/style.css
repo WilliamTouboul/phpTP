@@ -22,8 +22,10 @@ label {
     width: 300px;
     text-align: right;
 }
+
 input {
-    width : 300px;
+    width: 300px;
+
 }
 
 #outerDiv {
@@ -32,13 +34,16 @@ input {
 }
 
 #innerDiv {
-
     display: inline-block;
     margin: 0 auto;
     padding: 3px;
 }
 
-​.error {
-    color : red;
-    text-decoration : underline;
+.error {
+    color: red;
+}
+
+#LaManuLink {
+    color: white;
+    text-decoration: none;
 }
