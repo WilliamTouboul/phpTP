@@ -68,13 +68,11 @@
                         <input type="text" name="firstname" id="firstname" value="<?php if (isset($_POST['firstname'])) {
                                                                                         echo $_POST['firstname'];
                                                                                     }  ?>">
-                        <span class="error"><?= $firstnameError; ?> </span>
                     </div>
                     <div>
                         <!-- Date de naissance -->
                         <label for="birthday">Date de Naissance : </label>
                         <input type="date" id="birthday" name="birthday" value="">
-                        <span class="error"> <?= $ageError; ?> </span>
 
                     </div>
                     <div>
@@ -93,21 +91,21 @@
                         </select>
                         <span class="error"> <?= $errorMessages['birthplace'] ?? '' ?> </span>
                     </div>
+
+                    
                     <div>
                         <!-- Nationalité -->
                         <label for="nationality">Nationalité : </label>
                         <input type="text" name="nationality" id="nationality" value="<?php if (isset($_POST['nationality'])) {
                                                                                             echo $_POST['nationality'];
                                                                                         }  ?>">
-                        <span class="error"><?= $natioError; ?> </span>
-                    </div>
+                                                                                                            </div>
                     <div>
                         <!--  Adresse -->
                         <label for="adress"> Adresse : </label>
                         <input type="text" name="adress" id="adress" value="<?php if (isset($_POST['adress'])) {
                                                                                 echo $_POST['adress'];
                                                                             }  ?>">
-                        <span class="error"><?= $adressError; ?> </span>
                     </div>
                     <!-- E-mail -->
                     <div>
@@ -115,7 +113,6 @@
                         <input type="email" name="email" id="email" value="<?php if (isset($_POST['email'])) {
                                                                                 echo $_POST['email'];
                                                                             }  ?>">
-                        <span class="error"><?= $emailError;  ?> </span>
                     </div>
                     <!-- Téléphone -->
                     <div>
@@ -123,7 +120,6 @@
                         <input type="text" name="tel" value="<?php if (isset($_POST['tel'])) {
                                                                     echo $_POST['tel'];
                                                                 }  ?>">
-                        <span class="error"><?= $telError;  ?> </span>
 
                     </div>
                     <!-- Diplome -->
@@ -136,7 +132,6 @@
                             <option value="Bac+2">Bac+2</option>
                             <option value="Bac+3 ou supérieur">Bac+3 ou Supérieur</option>
                         </select>
-                        <span class="error"> <?= $dipError; ?> </span>
                     </div>
                     <!-- Nmo PE -->
                     <div>
@@ -144,7 +139,6 @@
                         <input type="PENumber" name="PENumber" value="<?php if (isset($_POST['PENumber'])) {
                                                                             echo $_POST['PENumber'];
                                                                         } ?>">
-                        <span class="error"><?= $PEError; ?> </span>
 
                     </div>
                     <!-- Nombre de badges, la ligue m'attend. -->
@@ -153,7 +147,6 @@
                         <input type="badges" name="badges" value="<?php if (isset($_POST['badges'])) {
                                                                         echo $_POST['badges'];
                                                                     } ?>">
-                        <span class="error"><?= $badgesError;  ?> </span>
 
                     </div>
                     <!-- Lien Code Academy -->
@@ -162,20 +155,18 @@
                         <input type="codeAc" name="codeAc" value="<?php if (isset($_POST['codeAc'])) {
                                                                         echo $_POST['codeAc'];
                                                                     } ?>">
-                        <span class="error"><?= $codeAcError; ?>
                     </div>
                     <!-- Premier text Area pour une question -->
                     <div>
                         <label for="heroQ">Si vous étiez un super héros/une super héroïne, qui seriez-vous et pourquoi ? <br> </label>
                         <textarea id="heroQ" name="heroQ" maxlength="200"></textarea>
-                        <span class="error"><?= $heroQError;  ?> </span>
+                    
 
                     </div>
                     <!-- Second Text Aera pour la deuxieme question -->
                     <div>
                         <label for="hackQ">Racontez-nous un de vos "hacks" (pas forcément technique ou informatique) <br> </label>
                         <textarea id="hackQ" name="hackQ" maxlength="200"></textarea>
-                        <span class="error"><?= $hackQError;  ?> </span>
 
                     </div>
                     <div>
@@ -186,7 +177,6 @@
                             <option value="oui">Oui</option>
                             <option value="non">Non.</option>
                         </select>
-                        <span class="error"><?= $expError;  ?> </span>
 
                     </div>
                     <!-- Bouton -->

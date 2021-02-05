@@ -10,36 +10,12 @@
     $allGood = FALSE;
 
     $errorMessages = [];
+
     $countryArray = [
         'AFG' => 'Afghanistan',
         'ALA' => 'Åland Islands',
         'ALB' => 'Albania'
     ];
-
-
-
-
-
-
-
-    // Message d'erreur : 
-    $lastnameError = $firstnameError = $natioError = $birthplaceError = $adressError = $emailError = $telError = $codeAcError = $dipError = $PEError = $badgesError = $heroQError = $hackQError = $expError = $ageError = '';
-    // Boolean pour verifier chaque champ
-    $checkLastname = FALSE;
-    $checkFirstname = FALSE;
-    $checkNationality = FALSE;
-    $checkAdress = FALSE;
-    $checkEmail = FALSE;
-    $checkTel = FALSE;
-    $checkCodeAc = FALSE;
-    $checkPE = FALSE;
-    $checkBadges = FALSE;
-    $checkHeroQ = FALSE;
-    $checkHackQ = FALSE;
-    $checkBirthplace = FALSE;
-    $checkDiplome = FALSE;
-    $checkExp = FALSE;
-    $checkAge = FALSE;
 
     if (isset($_POST['buttonSubmit'])) {
 
@@ -56,9 +32,9 @@
         if (empty($_POST['birthplace'])) {
             $errorMessages['birthplace'] = 'Veuillez selectioner un pays.';
         }
-        
-        if(isset($_POST['birthplace'])) {
-            if(!array_key_exists($_POST['birthplace'],$countryArray)) {
+
+        if (isset($_POST['birthplace'])) {
+            if (!array_key_exists($_POST['birthplace'], $countryArray)) {
                 $errorMessages['birthplace'] = 'Tu as essayé de tricher.';
             }
         }
@@ -68,7 +44,9 @@
 
 
 
-
+        if (count($errorMessages) < 1) {
+            header('Location: outuveux.php');
+        }
 
 
 
