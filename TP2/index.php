@@ -56,12 +56,10 @@
                     <div>
                         <!-- Nom -->
                         <label for="lastname">Nom : </label>
-                        <!-- la value sert a garder les infos dans le champ si on actualise pour eviter de tout perdre sur une mauvaise saisie. -->
-                        <input type="text" name="lastname" id="lastname" value="<?php if (isset($_POST['lastname'])) {
-                                                                                    echo $_POST['lastname'];
-                                                                                } ?>" >
-                        <!-- Span avec le message d'erreur a afficher. -->
-                        <span class="error"> <?= $lastnameError; ?> </span>
+                        <input type="text" name="lastname" id="lastname" value="<?= isset($_POST['lastname']) ?
+                                                                                 $_POST['lastname'] : ''
+                                                                                 ?>" >
+                        <span class="error"> <?= $errorMessages['lastname'] ?? '' ?> </span>
 
                     </div>
                     <div>
@@ -83,7 +81,7 @@
                         <!-- Pays de naissance -->
                         <label for="birthplace">Pays de Naissance : </label>
                         <select name="birthplace" id="birthplace">
-                            <option value="" selected disabled>--Choisissez--</option>
+                            <option value="" selected>--Choisissez--</option>
                             <option value="AFG">Afghanistan</option>
                             <option value="ALA">Åland Islands</option>
                             <option value="ALB">Albanie</option>
@@ -373,7 +371,7 @@
                     <div>
                         <label for="diplome">Diplome : </label>
                         <select id="diplome" name="diplome">
-                            <option value="" selected disabled>--Choisissez--</option>
+                            <option value="" selected>--Choisissez--</option>
                             <option value="sans">Sans</option>
                             <option value="Bac">Bac</option>
                             <option value="Bac+2">Bac+2</option>
@@ -425,7 +423,7 @@
                         <!-- Exp -->
                         <label for="exp">Avez vous déjà eu une expérience avec la programmation et/ou l'informatique avant de remplir ce formulaire ?</label>
                         <select id="exp" name="exp">
-                            <option value="" selected disabled>--Choisissez--</option>
+                            <option value="" selected>--Choisissez--</option>
                             <option value="oui">Oui</option>
                             <option value="non">Non.</option>
                         </select>
