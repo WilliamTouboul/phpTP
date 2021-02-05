@@ -1,6 +1,6 @@
     <?php
     //---- $regexStandard = '/^[\p{L}\p{Nd}\s]+$/'; Probleme avec les accents sur cette regex la.
-    $regexStandard = "/^[a-zA-Z0-9àâäéèêëïîôöùûü\'\-\/\.\,\s]+$/";
+    $regexStandard = "/^[a-zA-Zàâäéèêëïîôöùûü\'\-\/\.\,\s]+$/";
     $regexNumber = '/^[0-9]+$/';
     $regexMail = '/^(\s*|[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4})$/';
     $regexTel = '/^[0-9]{10}$/';
@@ -10,6 +10,11 @@
     $allGood = FALSE;
 
     $errorMessages = [];
+    $countryArray = [
+        'AFG' => 'Afghanistan',
+        'ALA' => 'Åland Islands',
+        'ALB' => 'Albania'
+    ];
 
 
 
@@ -38,13 +43,26 @@
 
     if (isset($_POST['buttonSubmit'])) {
 
-        if(isset($_POST['lastname'])) {
-            if(empty($_POST['lastname'])) {
+        if (isset($_POST['lastname'])) {
+
+            if (!preg_match($regexStandard, $_POST['lastname'])) {
+                $errorMessages['lastname'] = 'Veuillez respecter le format ex:Dupont';
+            }
+            if (empty($_POST['lastname'])) {
                 $errorMessages['lastname'] = 'Veuillez renseigner votre nom.';
             }
         }
 
-        var_dump($errorMessages);
+        if (empty($_POST['birthplace'])) {
+            $errorMessages['birthplace'] = 'Veuillez selectioner un pays.';
+        }
+        
+        if(isset($_POST['birthplace'])) {
+            if(!array_key_exists($_POST['birthplace'],$countryArray)) {
+                $errorMessages['birthplace'] = 'Tu as essayé de tricher.';
+            }
+        }
+
 
 
 
@@ -85,12 +103,7 @@
         }
 
 
-        //Verif si les selects sont vide :
-        if ($_POST['birthplace'] == '') {
-            $birthplaceError = 'Veuillez choisir un pays';
-        } else {
-            $checkBirthplace = TRUE;
-        }
+
         //---------
         if ($_POST['diplome'] == '') {
             $dipError = 'Veuillez choisir un niveau d\'etude';
