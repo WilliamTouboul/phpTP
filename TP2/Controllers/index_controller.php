@@ -11,7 +11,6 @@
 
     // Message d'erreur : 
     $lastnameError = $firstnameError = $natioError = $birthplaceError = $adressError = $emailError = $telError = $codeAcError = $dipError = $PEError = $badgesError = $heroQError = $hackQError = $expError = $ageError = '';
-
     // Boolean pour verifier chaque champ
     $checkLastname = FALSE;
     $checkFirstname = FALSE;

@@ -5,17 +5,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TP2</title>
-    <!-- CDN Bootstrap -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <!-- CSS -->
-    <link href="Assets/style.css?v=1" rel="stylesheet">
-
+    <link href="Assets/style.css" rel="stylesheet">
 </head>
 
 <body>
+
     <?php include('Controllers/index_controller.php'); ?>
 
-    <!-- Jumbo -->
     <div class="jumbotron jumbotron-fluid text-left">
         <div class="container text-left">
             <h1 class="display-4 text-left"><a href="http://phppartie10/TP2/" id="LaManuLink">La Manu</a></h1>
@@ -23,6 +20,7 @@
         </div>
     </div>
     <?php
+
     if ($allGood) {
     ?>
         <div class="container-fluid" id="outerDiv">
@@ -85,7 +83,7 @@
                         <!-- Pays de naissance -->
                         <label for="birthplace">Pays de Naissance : </label>
                         <select name="birthplace" id="birthplace">
-                            <option value="">--Choisissez--</option>
+                            <option value="" selected disabled>--Choisissez--</option>
                             <option value="AFG">Afghanistan</option>
                             <option value="ALA">Åland Islands</option>
                             <option value="ALB">Albanie</option>
@@ -375,7 +373,7 @@
                     <div>
                         <label for="diplome">Diplome : </label>
                         <select id="diplome" name="diplome">
-                            <option value="">--Choisissez--</option>
+                            <option value="" selected disabled>--Choisissez--</option>
                             <option value="sans">Sans</option>
                             <option value="Bac">Bac</option>
                             <option value="Bac+2">Bac+2</option>
@@ -427,7 +425,7 @@
                         <!-- Exp -->
                         <label for="exp">Avez vous déjà eu une expérience avec la programmation et/ou l'informatique avant de remplir ce formulaire ?</label>
                         <select id="exp" name="exp">
-                            <option value="">--Choisissez--</option>
+                            <option value="" selected disabled>--Choisissez--</option>
                             <option value="oui">Oui</option>
                             <option value="non">Non.</option>
                         </select>
