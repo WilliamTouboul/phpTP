@@ -17,6 +17,17 @@
         'ALB' => 'Albania'
     ];
 
+    function inputCleaner($input){
+        
+        $input = trim($input);
+        $input = strip_tags($input);
+        $input = htmlentities($input);
+        return $input;
+        
+    }
+
+    var_dump(inputCleaner('    > dsq q <div>123132 &&& </div>     '));
+
     if (isset($_POST['buttonSubmit'])) {
 
         if (isset($_POST['lastname'])) {
@@ -39,9 +50,20 @@
             }
         }
 
+        if(isset($_POST['email'])) {
+            if (empty($_POST['email'])) {
+                $errorMessages['email'] = 'Veuillez saisir votre email.';
+            }
+            if(!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
+                $errorMessages['email'] = 'Veuillez un email dupont@dupont.fr';
+            }
+        }
 
+        if (empty($_POST['experience'])) {
+            $errorMessages['experience'] = 'Veuillez vailder votre experience.';
+        }
 
-
+        
 
 
         if (count($errorMessages) < 1) {

@@ -57,7 +57,7 @@
                         <!-- Nom -->
                         <label for="lastname">Nom : </label>
                         <input type="text" name="lastname" id="lastname" value="<?= isset($_POST['lastname']) ?
-                                                                                    htmlspecialchars($_POST['lastname']) : ''
+                                                                                    htmlspecialchars(trim($_POST['lastname'])) : ''
                                                                                 ?>">
                         <span class="error"> <?= $errorMessages['lastname'] ?? '' ?> </span>
 
@@ -82,7 +82,7 @@
                             <option selected disabled>--Choisissez--</option>
                             <?php
                             foreach ($countryArray as $key => $value) { ?>
-                                <option value="<?= $key ?>" <?= isset($_POST['birthplace']) && $_POST['birthplace'] == $key ? 'selected' : '' ?> ><?= $value ?></option>
+                                <option value="<?= $key ?>" <?= isset($_POST['birthplace']) && $_POST['birthplace'] == $key ? 'selected' : '' ?>><?= $value ?></option>
                             <?php
                             }
                             ?>
@@ -92,14 +92,14 @@
                         <span class="error"> <?= $errorMessages['birthplace'] ?? '' ?> </span>
                     </div>
 
-                    
+
                     <div>
                         <!-- Nationalité -->
                         <label for="nationality">Nationalité : </label>
                         <input type="text" name="nationality" id="nationality" value="<?php if (isset($_POST['nationality'])) {
                                                                                             echo $_POST['nationality'];
                                                                                         }  ?>">
-                                                                                                            </div>
+                    </div>
                     <div>
                         <!--  Adresse -->
                         <label for="adress"> Adresse : </label>
@@ -110,10 +110,12 @@
                     <!-- E-mail -->
                     <div>
                         <label for="email">e-mail : </label>
-                        <input type="email" name="email" id="email" value="<?php if (isset($_POST['email'])) {
-                                                                                echo $_POST['email'];
-                                                                            }  ?>">
+                        <input type="text" name="email" id="email" value="<?= isset($_POST['email']) ?
+                                                                                    htmlspecialchars(trim($_POST['email'])) : ''
+                                                                                ?>">
+                      <span class="error"> <?= $errorMessages['email'] ?? '' ?> </span>
                     </div>
+                    
                     <!-- Téléphone -->
                     <div>
                         <label for="tel">Telephone : </label>
@@ -136,31 +138,25 @@
                     <!-- Nmo PE -->
                     <div>
                         <label for="PENumber"> Numéro Pole Emploi : </label>
-                        <input type="PENumber" name="PENumber" value="<?php if (isset($_POST['PENumber'])) {
-                                                                            echo $_POST['PENumber'];
-                                                                        } ?>">
+                        <input type="PENumber" name="PENumber" value="">
 
                     </div>
                     <!-- Nombre de badges, la ligue m'attend. -->
                     <div>
                         <label for="badges"> Nombres de badges : </label>
-                        <input type="badges" name="badges" value="<?php if (isset($_POST['badges'])) {
-                                                                        echo $_POST['badges'];
-                                                                    } ?>">
+                        <input type="badges" name="badges" value="">
 
                     </div>
                     <!-- Lien Code Academy -->
                     <div>
                         <label for="codeAc"> Lien Code Academy : </label>
-                        <input type="codeAc" name="codeAc" value="<?php if (isset($_POST['codeAc'])) {
-                                                                        echo $_POST['codeAc'];
-                                                                    } ?>">
+                        <input type="codeAc" name="codeAc">
                     </div>
                     <!-- Premier text Area pour une question -->
                     <div>
                         <label for="heroQ">Si vous étiez un super héros/une super héroïne, qui seriez-vous et pourquoi ? <br> </label>
                         <textarea id="heroQ" name="heroQ" maxlength="200"></textarea>
-                    
+
 
                     </div>
                     <!-- Second Text Aera pour la deuxieme question -->
@@ -170,16 +166,18 @@
 
                     </div>
                     <div>
-                        <!-- Exp -->
-                        <label for="exp">Avez vous déjà eu une expérience avec la programmation et/ou l'informatique avant de remplir ce formulaire ?</label>
-                        <select id="exp" name="exp">
-                            <option value="" selected>--Choisissez--</option>
-                            <option value="oui">Oui</option>
-                            <option value="non">Non.</option>
-                        </select>
+                    xp?
+                        <div class="text-center">
+                            <input type="radio" id="expY" name="experience" value="Oui" <?= isset($_POST['experience']) && $_POST['experience'] == 'Oui' ? 'checked' : '' ?>>
+                            <label for="expY">Oui</label>
+                        </div>
+                        <div>
+                            <input type="radio" id="expN" name="experience" value="Non" <?= isset($_POST['experience']) && $_POST['experience'] == 'Non' ? 'checked' : '' ?>>
+                            <label for="expN">Non</label>
+                        </div>
+                        <span class="error"> <?= $errorMessages['experience'] ?? '' ?> </span>
 
                     </div>
-                    <!-- Bouton -->
                     <input type="submit" value="GO" id="buttonSubmit" name="buttonSubmit">
                 </form>
             </div>
@@ -187,10 +185,6 @@
 
     <?php
     }
-
     ?>
-
-
 </body>
-
 </html>
